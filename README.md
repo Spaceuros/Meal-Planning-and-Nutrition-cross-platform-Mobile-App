@@ -88,7 +88,7 @@
     ```
     а затим
     ```bash
-    ssh-agent add ~/Desktop/ssh/key
+    ssh-add ~/Desktop/ssh/key
     ```
 10. *GitBash* је сада спреман за рад и имамо дозволу да преузмемо репозиторијум уносом следеће две команде:
     ```bash
