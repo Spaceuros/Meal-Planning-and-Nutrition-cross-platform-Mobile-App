@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SpejsMealPlanner.Models"
+             xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
+             x:DataType="viewmodels:HistoryPageViewModel"
+             x:Class="SpejsMealPlanner.HistoryPage"
+             Title="Istorija obroka"
+             BackgroundColor="#0F172A">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Obrisani obroci" TextColor="White" FontSize="22" FontAttributes="Bold" />
+        <Label Text="Zadržavamo poslednjih 5. Prevuci ulevo da vratiš obrok u dnevni plan." TextColor="#94A3B8" FontSize="14" />
+
+        <CollectionView ItemsSource="{Binding DeletedMeals}" Margin="0,15,0,0">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" Margin="0,40,0,0" Spacing="10">
+                    <Label Text="Istorija je prazna" TextColor="#64748B" FontSize="16" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Meal">
+                    
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems x:DataType="{x:Null}">
+                                <SwipeItem Text="Vrati" 
+                                           BackgroundColor="#10B981" 
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistoryPageViewModel}}, Path=RestoreMealCommand}" 
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Border StrokeShape="RoundRectangle 16" BackgroundColor="#1E293B" StrokeThickness="0" Padding="15, 20">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                                    <Label Text="Prevuci ulevo da vratiš" FontSize="12" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                                
+                                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding Calories}" FontSize="20" TextColor="#94A3B8" FontAttributes="Bold" />
+                                    <Label Text=" kcal" FontSize="14" TextColor="#64748B" VerticalOptions="End" Margin="0,0,0,3" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

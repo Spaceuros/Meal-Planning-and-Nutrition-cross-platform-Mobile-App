@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
+             x:DataType="viewmodels:LoginViewModel"
+             x:Class="SpejsMealPlanner.LoginPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#0F172A">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="35" VerticalOptions="Center">
+
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Label Text="SpejsMealPlanner" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Unesi PIN kod ili nastavi samostalno" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="PIN kod" TextColor="#94A3B8" FontSize="14" />
+                <Entry Text="{Binding Pin}"
+                       Placeholder="xxxx (ostavi prazno za Solo režim)"
+                       PlaceholderColor="#64748B"
+                       TextColor="White"
+                       BackgroundColor="#1E293B"
+                       Keyboard="Numeric"
+                       IsPassword="True"
+                       MaxLength="8"
+                       HeightRequest="55" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="15">
+                <Button Text="{Binding LoginButtonText}"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="55"
+                        Command="{Binding LoginCommand}" />
+
+                <Button Text="Nemaš PIN? Registruj se"
+                        BackgroundColor="Transparent"
+                        TextColor="#94A3B8"
+                        FontSize="15"
+                        Command="{Binding GoToRegisterCommand}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

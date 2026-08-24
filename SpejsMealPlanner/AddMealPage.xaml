@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SpejsMealPlanner.Models"
+             xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
+             x:DataType="viewmodels:AddMealViewModel"
+             x:Class="SpejsMealPlanner.AddMealPage"
+             Title="Detalji Obroka"
+             BackgroundColor="#0F172A">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+
+            <Label Text="Osnovni podaci" TextColor="White" FontSize="18" FontAttributes="Bold" />
+
+            <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="15">
+                <VerticalStackLayout Spacing="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="NAZIV OBROKA" TextColor="#94A3B8" FontSize="12" />
+                        <!-- BINDING ZA NAZIV -->
+                        <Entry Text="{Binding MealName}" Placeholder="Npr. Ovseni doručak" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" />
+                    </VerticalStackLayout>
+                    
+                    <BoxView HeightRequest="1" Color="#334155" />
+                    
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="KATEGORIJA" TextColor="#94A3B8" FontSize="12" />
+                        <!-- BINDING ZA KATEGORIJU -->
+                        <Entry Text="{Binding MealCategory}" Placeholder="Npr. Doručak" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Sastojci u obroku" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="0,10,0,0"/>
+
+            <!-- Forma za dodavanje novog sastojka u listu -->
+            <Grid ColumnDefinitions="2*, *, Auto" ColumnSpacing="10">
+                <!-- BINDING ZA PICKER -->
+                <Picker ItemsSource="{Binding AvailableIngredients}" 
+                        ItemDisplayBinding="{Binding Name}" 
+                        SelectedItem="{Binding SelectedIngredient}"
+                        Title="Izaberi" TextColor="White" TitleColor="#64748B" BackgroundColor="#1E293B" Grid.Column="0" />
+                
+                <!-- BINDING ZA GRAME -->
+                <Entry Text="{Binding GramsText}" Placeholder="Grami" Keyboard="Numeric" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#1E293B" Grid.Column="1" />
+                
+                <!-- KOMANDA ZA DODAVANJE -->
+                <Button Command="{Binding AddIngredientCommand}" Text="+" BackgroundColor="#3B82F6" TextColor="White" FontAttributes="Bold" WidthRequest="50" Grid.Column="2" />
+            </Grid>
+
+            <!-- Lista dodatih sastojaka -->
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentIngredients}" Spacing="10">
+                <BindableLayout.EmptyView>
+                    <Label Text="Nema dodatih sastojaka." TextColor="#64748B" FontAttributes="Italic" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                </BindableLayout.EmptyView>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:MealIngredient">
+                        
+                        <!-- SWIPE ZA BRISANJE -->
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems x:DataType="{x:Null}">
+                                    <SwipeItem Text="Obriši" BackgroundColor="#EF4444" 
+                                            Command="{Binding BindingContext.RemoveIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                            CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="15">
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15">
+                                    
+                                    <Label Text="{Binding Item.Name}" TextColor="White" VerticalOptions="Center" Grid.Column="0" />
+                                    
+                                    <HorizontalStackLayout Spacing="5" Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Grams}" TextColor="#94A3B8" />
+                                        <Label Text="g" TextColor="#94A3B8" />
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                        
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Command="{Binding SaveMealCommand}" Text="{Binding SaveButtonText}" BackgroundColor="#10B981" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" Margin="0,20,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

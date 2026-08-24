@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
+             x:DataType="viewmodels:RegisterViewModel"
+             x:Class="SpejsMealPlanner.RegisterPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0F172A">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                <Label Text="Registracija" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Izaberi ulogu i napravi profil" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                <Button Grid.Column="0"
+                        Text="Konzument"
+                        BackgroundColor="{Binding ConsumerButtonColor}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Command="{Binding SelectConsumerCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Kuvar"
+                        BackgroundColor="{Binding ChefButtonColor}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Command="{Binding SelectChefCommand}" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="15">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Ime" TextColor="#94A3B8" FontSize="14" />
+                    <Entry Text="{Binding Name}"
+                           Placeholder="Unesi svoje ime"
+                           PlaceholderColor="#64748B"
+                           TextColor="White"
+                           BackgroundColor="#1E293B"
+                           HeightRequest="50" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5" IsVisible="{Binding IsChef}">
+                    <Label Text="Izaberi konzumenta za koga kuvaš" TextColor="#94A3B8" FontSize="14" />
+                    <Picker Title="Izaberi konzumenta..."
+                            ItemsSource="{Binding AvailableConsumers}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedConsumer}"
+                            TextColor="White"
+                            TitleColor="#64748B"
+                            BackgroundColor="#1E293B"
+                            HeightRequest="50" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="PIN kod (min. 4 cifre)" TextColor="#94A3B8" FontSize="14" />
+                    <Entry Text="{Binding Pin}"
+                           Placeholder="xxxx"
+                           PlaceholderColor="#64748B"
+                           TextColor="White"
+                           BackgroundColor="#1E293B"
+                           Keyboard="Numeric"
+                           IsPassword="True"
+                           MaxLength="8"
+                           HeightRequest="50" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Button Text="Sačuvaj korisnika"
+                    BackgroundColor="#10B981"
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="14"
+                    HeightRequest="55"
+                    Margin="0,10,0,0"
+                    Command="{Binding RegisterCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
