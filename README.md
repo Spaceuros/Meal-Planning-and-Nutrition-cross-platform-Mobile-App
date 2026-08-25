@@ -1,155 +1,25 @@
-# Програмирање апликација за мобилне уређаје
+# Spejs Meal Planner 🍲📱
 
-Овај репозиторијум, намењен је студентима који предавања прате редовно на факултету или уживо преко Zoom платформе.
-Поене на настави, могуће је остварити уколико се *timestamp* *commit*-ова поклапа по времену са *timestamp*-ом *commit*-ова на часовима. Студенти који буду *commit*-ове накнадно правили, или ако *PR*-ови (*Pull Requests*) буду ван временског оквира наставе, неће бити бодовани.
+A cross-platform mobile application for meal planning and nutrition tracking, built with **.NET MAUI**. 
 
-**Важна напомена:** Студенти којима решење буде одбијено више од два пута, неће имати право на поене на настави.
+## 🚀 O projektu
+Ova aplikacija je razvijena kao završni projekat na predmetu "Programiranje aplikacija za mobilne uređaje". Dizajnirana je da olakša organizaciju ishrane kroz kreiranje i praćenje dnevnih i nedeljnih menija. 
 
-## УПУТСТВО ЗА РАД
-### Повезивање Git-а са GitHub-ом
-Пре рада на репозиторијуму, потребно је припремити оперативни систем и окружење за рад са *GitHub*-ом. Кораци су следећи:
-1. Преузети ***[GitBash](https://git-scm.com/downloads/win)*** и инсталирати га.
-2. Након пријаве на *GitHub*, кликнути на свој аватар у горњем десном углу и одабрати опцију „[Settings](https://github.com/settings/profile)”
-3. Из навигације са леве стране, у делу „*Access*”, одабрати „***[SSH and GPG keys](https://github.com/settings/keys)***”
-3. Кликнути на зеленo дугме „[New SSH key](https://github.com/settings/ssh/new)”.
-4. У поље „*Title*” уписати наслов (нпр. ***PCAuth***)
-5. Као „Key Type” одабрати „***Authentication Key***”
-6. У поље „*Key*” унети *SSH* кључ који ћемо генерисати на следећи начин:
-   1. Отворимо *GitBash* који смо инсталирали у кораку 1.
-   2. На радној површини, креирајмо фолдер „***ssh***” помоћу команде:
-      ```bash
-      mkdir ~/Desktop/ssh
-      ```
-   3. Након уноса, притискамо „Enter” на тастатури
-   4. Затим је потребно да се позиционирамо у креирани фолдер помоћу команде:
-      ```bash
-      cd ~/Desktop/ssh
-      ```
-   5. Након уноса, поново притискамо „Enter” на тастатури
-   6. Затим тражимо приказ целе путање до овог фолдера помоћу команде:
-      ```bash
-      pwd
-      ```
-   7. Поново притискамо „Enter” на тастатури
-   8. Приказаће се цела путања налик овој `/c/Users/pera/Desktop/ssh` коју је потребно да селектујемо и копирамо
-      Копирање се постиже десним кликом на селектовани текст и бирањем опције „***Copy***”,
-      важно је запазити да није могуће копирање пречицом *Ctrl+C* из *GitBash* прозора
-   9. Следи генерисање *SSH* кључа. То постижемо уносом команде:
-      ```bash
-      ssh-keygen -t ed25519 -C "email@example.com"
-      ```
-      Овде је потребно ”*email@example.com*” заменити својом имејл адресом.
-   10. Притискамо поново „Enter” на тастатури
-   11. Кључ ћемо сада креирати на путањи коју смо копирали у кораку 6.8. тако што ћемо налепити текст десним кликом и одабрати опцију „Paste” (пречица *Ctrl+V* ни овде не ради)
-       ```bash
-       /c/Users/pera/Desktop/ssh/kljuc
-       ```
-       (Команда је само пример, не треба је копирати већ искористити путању добијену у кораку 6 viii)
-   12. Поново притискамо „Enter” на тастатури
-   13. Тражиће нам се „passphrase”, који представља шифру коју морамо да упамтимо за касније
-       Довољно је да садржи 5-10 карактера, а затим притискамо „Enter”
-   14. Понављамо „passphrase” још једном и поново притискамо „Enter”
-   15. У случају да је све било исправно, добићемо поруку сличну овој:<pre>
-       Your identification has been saved in /c/Users/pera/Desktop/ssh/key
-       Your public key has been saved in /c/Users/pera/Desktop/ssh/key.pub
-       The key fingerprint is:
-       SHA256:OnmZDLAeKnsfOa1TkaNmcRKolq1Gak5Lmrq128ppCTA email@example.com
-       The key's randomart image is:
-       +--[ED25519 256]--+
-       |+A%+*.o .        |
-       |oNms = +         |
-       |  1 = +          |
-       | o 1 +           |
-       |. A + = 5        |
-       |.. k + +         |
-       |* .   .          |
-       |+A               |
-       |=l+              |
-       +----[SHA256]-----+
-       </pre>
-   16. У случају да програм јави грешку, потребно је да поново прођемо кроз све кораке из тачке 6
-   17. Сада ћемо приказати и копирати јавни SSH кључ уносом следеће команде:
-       ```bash
-       cat ~/Desktop/ssh/kljuc.pub
-       ```
-   18. Притискамо поново „Enter”
-   19. Приказаће се кључ налик овом:
-       ```
-       ssh-ed25519 AAAAC4AnkL3mZOL1MAE5AAAAI0Kc2QaDT/m1A4Nc0AKsNzz/M0qRJ5nnoU1442ek813e email@example.com
-       ```
-   20. Селектујемо цео кључ и копирамо га десним кликом и бирамо опцију „Copy”
-   21. Након што смо генерисали и ископирали јавни кључ, лепимо га у поље *Key* из 6. корака
+Aplikacija podržava rad na više platformi (iOS i Android) koristeći jedinstvenu C# bazu koda.
 
-8. Након што смо налепили јавни *SSH* кључ, потребно је да кликнемо на дугме „***Add SSH key***”
-9. Сада је потребно у *GitBash*-у, покренути *ssh-agent* и додати у њега приватни кључ који смо генерисали.
-    То ћемо постићи помоћу следеће две команде:
-    ```bash
-    eval $(ssh-agent)
-    ```
-    а затим
-    ```bash
-    ssh-add ~/Desktop/ssh/key
-    ```
-10. *GitBash* је сада спреман за рад и имамо дозволу да преузмемо репозиторијум уносом следеће две команде:
-    ```bash
-    cd ~/Dekstop
-    ```
-    и
-    ```bash
-    git clone git@github.com:dusanrajcevic/mef-pamu.git
-    ```
-11. Позиционарећемо се у фолдер наредбом:
-    ```bash
-    cd mef-pamu
-    ```
-12. Сада ћемо подесити име за аутора комадама:
-    ```bash
-    git config user.name "Ime Prezime"
-    ```
-    где `Ime Prezime` треба заменити својим именом и презименом
-13. Затим имејл за аутора командом:
-    ```bash
-    git config user.email example@email.com
-    ```
-    где `example@email.com` треба заменити имејл адресом коју сте користили приликом регистрације на *GitHub*-у
+## ✨ Glavne funkcionalnosti
+*   **Planiranje obroka:** Unos i praćenje doručka, ručka, večere i užina.
+*   **Offline podrška:** Podaci se čuvaju lokalno na uređaju pomoću SQLite baze podataka.
+*   **Korisničke uloge:** Prilagođen interfejs za različite tipove korisnika (konzument i onaj koji priprema hranu).
+*   **Moderan UI/UX:** Intuitivan dizajn sa implementiranim Tab Bar-om umesto standardnih menija.
 
-14. И сада је потребно да отворимо одговарајућу грану наредбом:
-    ```bash
-    git checkout predavanje#
-    ```
-    где знак `#` треба заменити редним бројем предавања нпр. `predavanje1`
-15. Затим ћемо из ове гране креирати нашу грану командом:
-    ```bash
-    git branch -m p#-ime-prezime
-    ```
-    где `#` треба заменити редним бројем предавања, а `ime-prezime` својим именом и презименом коришћењем искључиво енглеског алфабета, нпр. за прво предавање и име „Пера Перић”, унети `p1-pera-peric`
-16. У фолдеру на радној површини `mef-pamu/predavanje#` (где је # редни број предавања, нпр. `predavanje1`), потребно је креирати пројекат из *Visual Studio* развојног окружења и назвати га у формату `ime_prezime`, нпр. `pera_peric`.
-18. Након сваке значајне промене, радићемо *commit* (за појашњење посећивати предавања) командом:
-    ```bash
-    git commit -m "Poruka"
-    ```
-    Где је „*Poruka*” опис промене која је одрађена у тој измени.
-19. Када смо све завршили у том предавању, уносимо следећу команду:
-    ```bash
-    git push -u origin p#-ime-prezime
-    ```
-    где замењујемо `p#-ime-prezime` именом наше гране, нпр. `p1-pera-peric`
-20. У случају да направимо још неки *commit* у међувремену, потребно је да унесемо команду:
-    ```bash
-    git push
-    ```    
-21. Након што се наша грана буде појавила, потребно је да направимо „*Pull Request*”. То постижемо на следећи начин:
-    1. Отварамо таб „*[Pull Requests](https://github.com/dusanrajcevic/mef-pamu/pulls)*”
-    2. Затим је потребно да кликнемо на зелено дугме „*[New pull request](https://github.com/dusanrajcevic/mef-pamu/compare)*”
-    3. Из леве падајуће листе `base:main` бирамо грану `predavanje#` где је `#` редни број предавања које радимо (нпр. `predavanje1`)
-    4. Из десне падајуће листе `compare:main` бирамо нашу грану `p#-ime-prezime`, нпр. ако се зовемо „Пера Перић”, грана је `p1-pera-peric`
-    5. Затим је потребно да кликнемо на зелено дугме „*Create pull request*”
-    6. У наслову *PR-a* (*Pull Request*), уписујемо своје име и презиме и редни број предавања у формату `Ime Prezime - Predavanje #`, нпр. `Pera Peric - Predavanje 1`
-    7. У опису *PR-а* (*Pull Request*), потребно својим речима у неколико реченица (минимум 1, максимум 7) описати шта смо у пројекту урадили.
-    
-       НАПОМЕНА: Описи који буду користили *LLM*-ове (*Large Language Model*), неће бити уважени.
-       Такође, описи задатака који буду копије туђих описа неће бити уважени.
-       Биће прихваћени искључиво *PR*-ови који имају оригинални опис и који показују оквирно разумевање онога што је обрађено на часу кроз код.
-    9. Десно од описа, из дела „*Reviewers*”, кликом на точкић, одабрати корисника `dusanrajcevic`
-    10. Након свега тога, потребно је кликнути на дугме „*Create pull request*” испод описа и сачекати да *PR* буде одобрен
-    11. Када *PR* буде одобрен, потребно је кликнути на дугме „*Merge pull request*” и обрисати грану кликом на дугме „*Delete branch*”
+## 🛠️ Tehnologije
+*   **.NET MAUI** (Multi-platform App UI)
+*   **C#** & **XAML**
+*   **MVVM** (Model-View-ViewModel) arhitektura
+*   **SQLite-net-pcl** (Lokalna baza podataka)
+
+## ⚙️ Pokretanje projekta
+1. Klonirajte repozitorijum: `git clone https://github.com/Spaceuros/Meal-Planning-and-Nutrition-cross-platform-Mobile-App.git`
+2. Otvorite projekat u Visual Studio (ili VS Code sa MAUI ekstenzijom).
+3. Pokrenite aplikaciju na iOS simulatoru ili Android emulatoru.
