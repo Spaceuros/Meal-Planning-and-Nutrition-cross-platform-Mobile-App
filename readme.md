@@ -23,3 +23,6 @@ Aplikacija podržava rad na više platformi (iOS i Android) koristeći jedinstve
 1. Klonirajte repozitorijum: `git clone https://github.com/Spaceuros/Meal-Planning-and-Nutrition-cross-platform-Mobile-App.git`
 2. Otvorite projekat u Visual Studio (ili VS Code sa MAUI ekstenzijom).
 3. Pokrenite aplikaciju na iOS simulatoru ili Android emulatoru.
+
+Komanda za pokretanje u VSCode na iOS-u 
+dotnet build -t:Run -f net9.0-ios -p:RuntimeIdentifier=ios-arm64 -p:_DeviceName="Uros"
