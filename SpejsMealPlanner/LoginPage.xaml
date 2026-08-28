@@ -24,7 +24,7 @@
                        BackgroundColor="#1E293B"
                        Keyboard="Numeric"
                        IsPassword="True"
-                       MaxLength="8"
+                       MaxLength="4"
                        HeightRequest="55" />
             </VerticalStackLayout>
 

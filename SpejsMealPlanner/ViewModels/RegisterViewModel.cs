@@ -65,7 +65,14 @@ public partial class RegisterViewModel : ObservableObject
         IsChef = true;
         ConsumerButtonColor = "#1E293B";
         ChefButtonColor = "#3B82F6";
-        UcitajKonzumente(); // Osvežavamo listu kada klikne na Kuvara
+        UcitajKonzumente();
+    }
+
+    [RelayCommand]
+    private async Task GoBackAsync()
+    {
+        var page = Application.Current!.Windows[0].Page!;
+        await page.Navigation.PopAsync();
     }
 
     [RelayCommand]
