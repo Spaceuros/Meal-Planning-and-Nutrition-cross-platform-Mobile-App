@@ -10,15 +10,12 @@
 
     <Grid RowDefinitions="Auto, *" Padding="20">
         
-        <!-- FORMA ZA UNOS NOVE NAMIRNICE -->
         <Border Grid.Row="0" BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="15" Margin="0,0,0,20">
             <VerticalStackLayout Spacing="15">
                 <Label Text="Dodaj novu namirnicu (na 100g)" TextColor="White" FontSize="16" FontAttributes="Bold" />
                 
-                <!-- BINDING ZA NAZIV -->
                 <Entry Text="{Binding NameEntryText}" Placeholder="Naziv (npr. Jaje, Piletina...)" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" />
                 
-                <!-- Polja za unos nutrijenata -->
                 <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="10">
                     <VerticalStackLayout Grid.Column="0" Spacing="2">
                         <Label Text="Kcal" TextColor="#10B981" FontSize="12" HorizontalOptions="Center" />
@@ -41,12 +38,10 @@
                     </VerticalStackLayout>
                 </Grid>
 
-                <!-- BINDING ZA DUGME (Dodavanje/Ažuriranje) -->
                 <Button Command="{Binding AddIngredientCommand}" Text="Dodaj u bazu" BackgroundColor="#6366F1" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" />
             </VerticalStackLayout>
         </Border>
 
-        <!-- LISTA SASTOJAKA -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Ingredients}">
             
             <CollectionView.ItemsLayout>
@@ -63,19 +58,24 @@
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems x:DataType="{x:Null}">
-                                <SwipeItem Text="Izmeni" BackgroundColor="#3B82F6" 
-                                        Command="{Binding BindingContext.EditIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                        CommandParameter="{Binding .}" />
+                                <SwipeItemView Command="{Binding BindingContext.EditIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                               CommandParameter="{Binding .}">
+                                    <Border BackgroundColor="#3B82F6" StrokeShape="RoundRectangle 12" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="Izmeni" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    </Border>
+                                </SwipeItemView>
                                 
-                                <SwipeItem Text="Obriši" BackgroundColor="#EF4444" 
-                                        Command="{Binding BindingContext.DeleteIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                        CommandParameter="{Binding .}" />
+                                <SwipeItemView Command="{Binding BindingContext.DeleteIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                               CommandParameter="{Binding .}">
+                                    <Border BackgroundColor="#EF4444" StrokeShape="RoundRectangle 12" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="Obriši" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    </Border>
+                                </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
 
                         <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="15">
                             <Grid ColumnDefinitions="*, Auto">
-                                <!-- Leva strana: Naziv i kalorije -->
                                 <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
                                     <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold" />
                                     <HorizontalStackLayout Spacing="2">
@@ -84,7 +84,6 @@
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 
-                                <!-- Desna strana: Makronutrijenti -->
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="10">
                                     <VerticalStackLayout HorizontalOptions="Center">
                                         <Label Text="P" TextColor="#3B82F6" FontSize="10" HorizontalOptions="Center" />

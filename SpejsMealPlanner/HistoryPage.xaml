@@ -29,10 +29,12 @@
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems x:DataType="{x:Null}">
-                                <SwipeItem Text="Vrati" 
-                                           BackgroundColor="#10B981" 
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistoryPageViewModel}}, Path=RestoreMealCommand}" 
-                                           CommandParameter="{Binding .}" />
+                                <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistoryPageViewModel}}, Path=RestoreMealCommand}" 
+                                               CommandParameter="{Binding .}">
+                                    <Border BackgroundColor="#10B981" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="Vrati" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    </Border>
+                                </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
 

@@ -46,12 +46,18 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems x:DataType="{x:Null}">
-                                    <SwipeItem Text="Izmeni" BackgroundColor="#3B82F6" 
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MealsManagerViewModel}}, Path=EditMealCommand}" 
-                                               CommandParameter="{Binding .}" />
-                                    <SwipeItem Text="Obriši" BackgroundColor="#EF4444" 
-                                                Command="{Binding BindingContext.DeleteMealCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                                CommandParameter="{Binding .}" />
+                                    <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MealsManagerViewModel}}, Path=EditMealCommand}" 
+                                                   CommandParameter="{Binding .}">
+                                        <Border BackgroundColor="#3B82F6" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                            <Label Text="Izmeni" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                        </Border>
+                                    </SwipeItemView>
+                                    <SwipeItemView Command="{Binding BindingContext.DeleteMealCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                                   CommandParameter="{Binding .}">
+                                        <Border BackgroundColor="#EF4444" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                            <Label Text="Obriši" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                        </Border>
+                                    </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
