@@ -5,26 +5,25 @@
              xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
              x:DataType="viewmodels:MealsManagerViewModel"
              x:Class="SpejsMealPlanner.MealsManagerPage"
-             Title="Upravljanje Obrocima"
-             BackgroundColor="#0F172A">
+             Title="{DynamicResource MealsManagerTitle}">
 
     <Grid Padding="20">
         
         <Grid RowDefinitions="Auto, *">
             
             <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10" Margin="0,0,0,15">
-                <Label Grid.Column="0" Text="Tvoji Obroci" TextColor="White" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" />
+                <Label Grid.Column="0" Text="{DynamicResource YourMeals}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" VerticalOptions="Center" />
                 
-                <Button Grid.Column="1" Text="Istorija" 
+                <Button Grid.Column="1" Text="{DynamicResource History}" 
                         Command="{Binding OpenHistoryCommand}" 
-                        BackgroundColor="#334155" TextColor="White" 
-                        CornerRadius="8" HeightRequest="36" Padding="15,0" 
+                        Style="{StaticResource ButtonSecondaryPill}"
+                        Padding="15,0" 
                         VerticalOptions="Center" />
 
-                <Button Grid.Column="2" Text="Odjavi se" 
+                <Button Grid.Column="2" Text="{DynamicResource Logout}" 
                         Command="{Binding LogoutCommand}" 
-                        BackgroundColor="#EF4444" TextColor="White" 
-                        CornerRadius="8" HeightRequest="36" Padding="15,0" 
+                        Style="{StaticResource ButtonSecondaryPill}"
+                        Padding="15,0" 
                         VerticalOptions="Center" />
             </Grid>
 
@@ -36,8 +35,8 @@
 
                 <CollectionView.EmptyView>
                     <VerticalStackLayout HorizontalOptions="Center" Margin="0,40,0,0" Spacing="5">
-                        <Label Text="Lista je prazna" TextColor="#64748B" FontSize="16" HorizontalOptions="Center" />
-                        <Label Text="Klikni na + da dodaš novi obrok" TextColor="#475569" FontSize="14" HorizontalOptions="Center" />
+                        <Label Text="{DynamicResource EmptyMealList}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                        <Label Text="{DynamicResource ClickToAddMeal}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 
@@ -48,50 +47,50 @@
                                 <SwipeItems x:DataType="{x:Null}">
                                     <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MealsManagerViewModel}}, Path=EditMealCommand}" 
                                                    CommandParameter="{Binding .}">
-                                        <Border BackgroundColor="#3B82F6" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                            <Label Text="Izmeni" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                        <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                            <Label Text="{DynamicResource Edit}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Border>
                                     </SwipeItemView>
                                     <SwipeItemView Command="{Binding BindingContext.DeleteMealCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                                    CommandParameter="{Binding .}">
-                                        <Border BackgroundColor="#EF4444" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                            <Label Text="Obriši" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                        <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                            <Label Text="{DynamicResource Delete}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Border>
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#1E293B" StrokeThickness="0" Padding="15">
+                            <Border StrokeShape="RoundRectangle 18" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" Padding="24">
                                 <VerticalStackLayout Spacing="12">
                                     
                                     <Grid ColumnDefinitions="*, Auto">
                                         <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" />
-                                            <Label Text="Prevuci ulevo za opcije" FontSize="12" TextColor="#64748B" />
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                            <Label Text="{DynamicResource SwipeLeftOptions}" Style="{StaticResource Caption}" />
                                         </VerticalStackLayout>
                                         
                                         <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                            <Label Text="{Binding Calories}" FontSize="20" TextColor="#10B981" FontAttributes="Bold" />
-                                            <Label Text=" kcal" FontSize="14" TextColor="#64748B" VerticalOptions="End" Margin="0,0,0,3" />
+                                            <Label Text="{Binding Calories}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                            <Label Text=" kcal" Style="{StaticResource Caption}" VerticalOptions="End" Margin="0,0,0,3" />
                                         </HorizontalStackLayout>
                                     </Grid>
 
-                                    <BoxView HeightRequest="1" Color="#334155" />
+                                    <BoxView HeightRequest="1" Color="{StaticResource DividerSoft}" />
 
                                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Ingredients}" Spacing="8">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate x:DataType="models:MealIngredient">
                                                 <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
-                                                    <Label Grid.Column="0" Text="{Binding Item.Name}" FontSize="14" TextColor="#CBD5E1" VerticalOptions="Center" />
+                                                    <Label Grid.Column="0" Text="{Binding Item.Name}" VerticalOptions="Center" />
                                                     
                                                     <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                                        <Label Text="{Binding Grams}" FontSize="14" TextColor="#94A3B8" />
-                                                        <Label Text="g" FontSize="14" TextColor="#94A3B8" />
+                                                        <Label Text="{Binding Grams}" Style="{StaticResource Caption}" />
+                                                        <Label Text="g" Style="{StaticResource Caption}" />
                                                     </HorizontalStackLayout>
 
                                                     <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="2">
-                                                        <Label Text="{Binding CalculatedCalories}" FontSize="14" TextColor="#F87171" />
-                                                        <Label Text="kcal" FontSize="12" TextColor="#64748B" VerticalOptions="End" Margin="0,0,0,1" />
+                                                        <Label Text="{Binding CalculatedCalories}" FontAttributes="Bold" />
+                                                        <Label Text="kcal" Style="{StaticResource Caption}" VerticalOptions="End" Margin="0,0,0,1" />
                                                     </HorizontalStackLayout>
                                                 </Grid>
                                             </DataTemplate>
@@ -106,13 +105,13 @@
             </CollectionView>
         </Grid>
 
-        <Border BackgroundColor="#6366F1" WidthRequest="60" HeightRequest="60" 
-                StrokeShape="RoundRectangle 30" StrokeThickness="0" 
+        <Border BackgroundColor="{StaticResource Primary}" WidthRequest="56" HeightRequest="56" 
+                StrokeShape="RoundRectangle 28" StrokeThickness="0" 
                 HorizontalOptions="End" VerticalOptions="End" Margin="0, 0, 0, 20">
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding AddNewMealCommand}" />
             </Border.GestureRecognizers>
-            <Label Text="+" TextColor="White" FontSize="32" FontAttributes="Bold" 
+            <Label Text="+" TextColor="{StaticResource OnPrimary}" FontSize="32" FontAttributes="Bold" 
                    HorizontalOptions="Center" VerticalOptions="Center" Margin="0,-2,0,0"/>
         </Border>
 

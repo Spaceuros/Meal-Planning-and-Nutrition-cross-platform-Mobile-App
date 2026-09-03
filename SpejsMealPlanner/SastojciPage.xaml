@@ -5,40 +5,39 @@
              xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
              x:DataType="viewmodels:SastojciViewModel"
              x:Class="SpejsMealPlanner.SastojciPage"
-             Title="Baza Sastojaka"
-             BackgroundColor="#0F172A">
+             Title="{DynamicResource IngredientsDatabase}">
 
     <Grid RowDefinitions="Auto, *" Padding="20">
         
-        <Border Grid.Row="0" BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="15" Margin="0,0,0,20">
+        <Border Grid.Row="0" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" StrokeShape="RoundRectangle 18" Padding="24" Margin="0,0,0,20">
             <VerticalStackLayout Spacing="15">
-                <Label Text="Dodaj novu namirnicu (na 100g)" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                <Label Text="{DynamicResource AddNewIngredient}" FontAttributes="Bold" />
                 
-                <Entry Text="{Binding NameEntryText}" Placeholder="Naziv (npr. Jaje, Piletina...)" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" />
+                <Entry Text="{Binding NameEntryText}" Placeholder="{DynamicResource IngredientNamePlaceholder}" />
                 
                 <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="10">
                     <VerticalStackLayout Grid.Column="0" Spacing="2">
-                        <Label Text="Kcal" TextColor="#10B981" FontSize="12" HorizontalOptions="Center" />
-                        <Entry Text="{Binding CaloriesEntryText}" Keyboard="Numeric" Placeholder="0" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" HorizontalTextAlignment="Center" />
+                        <Label Text="Kcal" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                        <Entry Text="{Binding CaloriesEntryText}" Keyboard="Numeric" Placeholder="0" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                     
                     <VerticalStackLayout Grid.Column="1" Spacing="2">
-                        <Label Text="Proteini" TextColor="#3B82F6" FontSize="12" HorizontalOptions="Center" />
-                        <Entry Text="{Binding ProteinEntryText}" Keyboard="Numeric" Placeholder="0" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" HorizontalTextAlignment="Center" />
+                        <Label Text="{DynamicResource Protein}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                        <Entry Text="{Binding ProteinEntryText}" Keyboard="Numeric" Placeholder="0" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                     
                     <VerticalStackLayout Grid.Column="2" Spacing="2">
-                        <Label Text="Uglj. H." TextColor="#F59E0B" FontSize="12" HorizontalOptions="Center" />
-                        <Entry Text="{Binding CarbsEntryText}" Keyboard="Numeric" Placeholder="0" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" HorizontalTextAlignment="Center" />
+                        <Label Text="{DynamicResource Carbs}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                        <Entry Text="{Binding CarbsEntryText}" Keyboard="Numeric" Placeholder="0" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                     
                     <VerticalStackLayout Grid.Column="3" Spacing="2">
-                        <Label Text="Masti" TextColor="#EF4444" FontSize="12" HorizontalOptions="Center" />
-                        <Entry Text="{Binding FatsEntryText}" Keyboard="Numeric" Placeholder="0" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#0F172A" HorizontalTextAlignment="Center" />
+                        <Label Text="{DynamicResource Fats}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                        <Entry Text="{Binding FatsEntryText}" Keyboard="Numeric" Placeholder="0" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Grid>
 
-                <Button Command="{Binding AddIngredientCommand}" Text="Dodaj u bazu" BackgroundColor="#6366F1" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" />
+                <Button Command="{Binding AddIngredientCommand}" Text="{DynamicResource AddToDatabase}" />
             </VerticalStackLayout>
         </Border>
 
@@ -49,7 +48,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
-                <Label Text="Baza sastojaka je prazna." TextColor="#64748B" FontAttributes="Italic" HorizontalOptions="Center" Margin="0,20,0,0"/>
+                <Label Text="{DynamicResource IngredientsDatabaseEmpty}" Style="{StaticResource Caption}" HorizontalOptions="Center" Margin="0,20,0,0"/>
             </CollectionView.EmptyView>
             
             <CollectionView.ItemTemplate>
@@ -60,42 +59,42 @@
                             <SwipeItems x:DataType="{x:Null}">
                                 <SwipeItemView Command="{Binding BindingContext.EditIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                                CommandParameter="{Binding .}">
-                                    <Border BackgroundColor="#3B82F6" StrokeShape="RoundRectangle 12" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                        <Label Text="Izmeni" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="{DynamicResource Edit}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Border>
                                 </SwipeItemView>
                                 
                                 <SwipeItemView Command="{Binding BindingContext.DeleteIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                                CommandParameter="{Binding .}">
-                                    <Border BackgroundColor="#EF4444" StrokeShape="RoundRectangle 12" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                        <Label Text="Obriši" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="{DynamicResource Delete}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Border>
                                 </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="15">
+                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" StrokeShape="RoundRectangle 18" Padding="24">
                             <Grid ColumnDefinitions="*, Auto">
                                 <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
                                     <HorizontalStackLayout Spacing="2">
-                                        <Label Text="{Binding Calories}" TextColor="#10B981" FontSize="14" FontAttributes="Bold" />
-                                        <Label Text=" kcal / 100g" TextColor="#64748B" FontSize="12" VerticalOptions="End" Margin="0,0,0,1"/>
+                                        <Label Text="{Binding Calories}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                        <Label Text=" kcal / 100g" Style="{StaticResource Caption}" VerticalOptions="End" Margin="0,0,0,1"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="10">
                                     <VerticalStackLayout HorizontalOptions="Center">
-                                        <Label Text="P" TextColor="#3B82F6" FontSize="10" HorizontalOptions="Center" />
-                                        <Label Text="{Binding Protein}" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                                        <Label Text="P" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Protein}" HorizontalOptions="Center" />
                                     </VerticalStackLayout>
                                     <VerticalStackLayout HorizontalOptions="Center">
-                                        <Label Text="UH" TextColor="#F59E0B" FontSize="10" HorizontalOptions="Center" />
-                                        <Label Text="{Binding Carbs}" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                                        <Label Text="UH" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Carbs}" HorizontalOptions="Center" />
                                     </VerticalStackLayout>
                                     <VerticalStackLayout HorizontalOptions="Center">
-                                        <Label Text="M" TextColor="#EF4444" FontSize="10" HorizontalOptions="Center" />
-                                        <Label Text="{Binding Fats}" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                                        <Label Text="M" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Fats}" HorizontalOptions="Center" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                             </Grid>

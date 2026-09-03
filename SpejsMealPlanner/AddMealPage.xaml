@@ -5,46 +5,45 @@
              xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
              x:DataType="viewmodels:AddMealViewModel"
              x:Class="SpejsMealPlanner.AddMealPage"
-             Title="Detalji Obroka"
-             BackgroundColor="#0F172A">
+             Title="{DynamicResource AddMealTitle}">
 
     <ScrollView Padding="20">
         <VerticalStackLayout Spacing="20">
 
-            <Label Text="Osnovni podaci" TextColor="White" FontSize="18" FontAttributes="Bold" />
+            <Label Text="{DynamicResource BasicInfo}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" />
 
-            <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="15">
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" StrokeShape="RoundRectangle 18" Padding="24">
                 <VerticalStackLayout Spacing="15">
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="NAZIV OBROKA" TextColor="#94A3B8" FontSize="12" />
-                        <Entry Text="{Binding MealName}" Placeholder="Npr. Ovseni doručak" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" />
+                        <Label Text="{DynamicResource MealName}" Style="{StaticResource Caption}" />
+                        <Entry Text="{Binding MealName}" Placeholder="{DynamicResource MealNamePlaceholder}" BackgroundColor="Transparent" />
                     </VerticalStackLayout>
                     
-                    <BoxView HeightRequest="1" Color="#334155" />
+                    <BoxView HeightRequest="1" Color="{StaticResource DividerSoft}" />
                     
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="KATEGORIJA" TextColor="#94A3B8" FontSize="12" />
-                        <Entry Text="{Binding MealCategory}" Placeholder="Npr. Doručak" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" />
+                        <Label Text="{DynamicResource MealCategory}" Style="{StaticResource Caption}" />
+                        <Entry Text="{Binding MealCategory}" Placeholder="{DynamicResource MealCategoryPlaceholder}" BackgroundColor="Transparent" />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="Sastojci u obroku" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="0,10,0,0"/>
+            <Label Text="{DynamicResource IngredientsInMeal}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" Margin="0,10,0,0"/>
 
             <Grid ColumnDefinitions="2*, *, Auto" ColumnSpacing="10">
                 <Picker ItemsSource="{Binding AvailableIngredients}" 
                         ItemDisplayBinding="{Binding Name}" 
                         SelectedItem="{Binding SelectedIngredient}"
-                        Title="Izaberi" TextColor="White" TitleColor="#64748B" BackgroundColor="#1E293B" Grid.Column="0" />
+                        Title="{DynamicResource Choose}" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" Grid.Column="0" />
                 
-                <Entry Text="{Binding GramsText}" Placeholder="Grami" Keyboard="Numeric" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="#1E293B" Grid.Column="1" />
+                <Entry Text="{Binding GramsText}" Placeholder="{DynamicResource Grams}" Keyboard="Numeric" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" Grid.Column="1" />
                 
-                <Button Command="{Binding AddIngredientCommand}" Text="+" BackgroundColor="#3B82F6" TextColor="White" FontAttributes="Bold" WidthRequest="50" Grid.Column="2" />
+                <Button Command="{Binding AddIngredientCommand}" Text="+" WidthRequest="50" Grid.Column="2" />
             </Grid>
 
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentIngredients}" Spacing="10">
                 <BindableLayout.EmptyView>
-                    <Label Text="Nema dodatih sastojaka." TextColor="#64748B" FontAttributes="Italic" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                    <Label Text="{DynamicResource NoIngredientsAdded}" Style="{StaticResource Caption}" HorizontalOptions="Center" Margin="0,10,0,0"/>
                 </BindableLayout.EmptyView>
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:MealIngredient">
@@ -54,19 +53,19 @@
                                 <SwipeItems x:DataType="{x:Null}">
                                     <SwipeItemView Command="{Binding BindingContext.RemoveIngredientCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                                    CommandParameter="{Binding .}">
-                                        <Border BackgroundColor="#EF4444" StrokeShape="RoundRectangle 12" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                            <Label Text="Obriši" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                        <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                            <Label Text="{DynamicResource Delete}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Border>
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
-                            <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="15">
+                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" StrokeShape="RoundRectangle 18" Padding="15">
                                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15">
-                                    <Label Text="{Binding Item.Name}" TextColor="White" VerticalOptions="Center" Grid.Column="0" />
+                                    <Label Text="{Binding Item.Name}" VerticalOptions="Center" Grid.Column="0" />
                                     <HorizontalStackLayout Spacing="5" Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="{Binding Grams}" TextColor="#94A3B8" />
-                                        <Label Text="g" TextColor="#94A3B8" />
+                                        <Label Text="{Binding Grams}" Style="{StaticResource Caption}" />
+                                        <Label Text="g" Style="{StaticResource Caption}" />
                                     </HorizontalStackLayout>
                                 </Grid>
                             </Border>
@@ -76,7 +75,7 @@
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
 
-            <Button Command="{Binding SaveMealCommand}" Text="{Binding SaveButtonText}" BackgroundColor="#10B981" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" Margin="0,20,0,0" />
+            <Button Command="{Binding SaveMealCommand}" Text="{Binding SaveButtonText}" Margin="0,20,0,0" />
 
         </VerticalStackLayout>
     </ScrollView>

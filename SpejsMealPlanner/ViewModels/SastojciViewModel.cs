@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpejsMealPlanner.Models;
 using SpejsMealPlanner.Data;
+using SpejsMealPlanner.Utilities;
 using System.Collections.ObjectModel;
 
 namespace SpejsMealPlanner.ViewModels;
@@ -45,9 +46,12 @@ public partial class SastojciViewModel : ObservableObject
     [RelayCommand]
     private async Task AddIngredientAsync()
     {
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
         if (string.IsNullOrWhiteSpace(NameEntryText) || string.IsNullOrWhiteSpace(CaloriesEntryText))
         {
-            await Shell.Current.DisplayAlert("Greška", "Unesi barem naziv i kalorije.", "OK");
+            string title = LocalizationManager.Translate("Error", isEnglish);
+            string msg = isEnglish ? "Enter at least name and calories." : "Unesi barem naziv i kalorije.";
+            await Shell.Current.DisplayAlert(title, msg, LocalizationManager.Translate("Ok", isEnglish));
             return;
         }
 
@@ -112,8 +116,14 @@ public partial class SastojciViewModel : ObservableObject
     private async Task DeleteIngredientAsync(Ingredient sastojak)
     {
         if (sastojak == null) return;
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
+        
+        string title = isEnglish ? "Delete" : "Brisanje";
+        string msg = isEnglish ? $"Do you want to delete '{sastojak.Name}'?" : $"Da li želiš da obrišeš '{sastojak.Name}'?";
+        string yesBtn = isEnglish ? "Yes" : "Da";
+        string noBtn = isEnglish ? "No" : "Ne";
 
-        bool potvrda = await Shell.Current.DisplayAlert("Brisanje", $"Da li želiš da obrišeš '{sastojak.Name}'?", "Da", "Ne");
+        bool potvrda = await Shell.Current.DisplayAlert(title, msg, yesBtn, noBtn);
         if (potvrda)
         {
             _db.DeleteIngredient(sastojak.Id);

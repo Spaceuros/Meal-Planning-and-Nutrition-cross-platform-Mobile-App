@@ -4,48 +4,76 @@
              xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
              x:DataType="viewmodels:LoginViewModel"
              x:Class="SpejsMealPlanner.LoginPage"
-             NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#0F172A">
+             NavigationPage.HasNavigationBar="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="35" VerticalOptions="Center">
+    <Grid RowDefinitions="Auto, *">
 
-            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                <Label Text="SpejsMealPlanner" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
-                <Label Text="Unesi PIN kod ili nastavi samostalno" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center" />
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="20,20,20,0">
+            
+            <Border Grid.Column="0" Stroke="{StaticResource Hairline}" StrokeThickness="1" StrokeShape="RoundRectangle 22" 
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CanvasParchment}, Dark={StaticResource SurfaceTile3}}" 
+                    HeightRequest="44" WidthRequest="100">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleLanguageCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*,*">
+                    <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource InkMuted48}}" 
+                            StrokeThickness="0" StrokeShape="RoundRectangle 20" Margin="2">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsEnglish}" Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+                    
+                    <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource InkMuted48}}" 
+                            StrokeThickness="0" StrokeShape="RoundRectangle 20" Margin="2" IsVisible="False">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsEnglish}" Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                    </Border>
+
+                    <Label Grid.Column="0" Text="RS" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource Caption}" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="EN" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource Caption}" FontAttributes="Bold" />
+                </Grid>
+            </Border>
+            
+            <Border Grid.Column="2" Stroke="{StaticResource Hairline}" StrokeThickness="1" StrokeShape="RoundRectangle 22" 
+                    BackgroundColor="Transparent" WidthRequest="44" HeightRequest="44">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" />
+                </Border.GestureRecognizers>
+                <Label Text="{Binding ThemeIcon}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource OnDark}}" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="30" Spacing="35" VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="{DynamicResource AppTitle}" Style="{StaticResource Headline}" />
+                    <Label Text="{DynamicResource LoginSubtitle}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{DynamicResource PinCode}" Style="{StaticResource Caption}" />
+                    <Entry Text="{Binding Pin}"
+                           Placeholder="{DynamicResource PinPlaceholder}"
+                           Keyboard="Numeric"
+                           IsPassword="True"
+                           MaxLength="4" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15">
+                    <Button Text="{Binding LoginButtonText}" Command="{Binding LoginCommand}" />
+
+                    <Button Text="{DynamicResource NoPinRegister}" Style="{StaticResource ButtonSecondaryPill}" Command="{Binding GoToRegisterCommand}" />
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="8">
-                <Label Text="PIN kod" TextColor="#94A3B8" FontSize="14" />
-                <Entry Text="{Binding Pin}"
-                       Placeholder="xxxx (ostavi prazno za Solo režim)"
-                       PlaceholderColor="#64748B"
-                       TextColor="White"
-                       BackgroundColor="#1E293B"
-                       Keyboard="Numeric"
-                       IsPassword="True"
-                       MaxLength="4"
-                       HeightRequest="55" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="15">
-                <Button Text="{Binding LoginButtonText}"
-                        BackgroundColor="#3B82F6"
-                        TextColor="White"
-                        FontSize="18"
-                        FontAttributes="Bold"
-                        CornerRadius="14"
-                        HeightRequest="55"
-                        Command="{Binding LoginCommand}" />
-
-                <Button Text="Nemaš PIN? Registruj se"
-                        BackgroundColor="Transparent"
-                        TextColor="#94A3B8"
-                        FontSize="15"
-                        Command="{Binding GoToRegisterCommand}" />
-            </VerticalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>

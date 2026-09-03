@@ -6,99 +6,87 @@
              x:DataType="viewmodels:MainPageViewModel"
              x:Class="SpejsMealPlanner.MainPage"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="#0F172A"> 
+             Shell.NavBarIsVisible="False"> 
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
             
             <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                 <VerticalStackLayout Grid.Column="0" Spacing="5">
-                    <Label Text="Tvoj plan za danas" TextColor="#94A3B8" FontSize="14" TextTransform="Uppercase" FontAttributes="Bold" />
-                    <Label Text="{Binding DateText}" TextColor="White" FontSize="28" FontAttributes="Bold" />
+                    <Label Text="{DynamicResource PlanForToday}" Style="{StaticResource Caption}" TextTransform="Uppercase" FontAttributes="Bold" />
+                    <Label Text="{Binding DateText}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" />
                 </VerticalStackLayout>
 
                 <Button Grid.Column="1"
-                        Text="Odjavi se"
-                        BackgroundColor="#EF4444"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="8"
-                        HeightRequest="35"
+                        Text="{DynamicResource Logout}"
+                        Style="{StaticResource ButtonSecondaryPill}"
                         Padding="15,0"
                         VerticalOptions="Center"
                         Command="{Binding LogoutCommand}" />
             </Grid>
 
-            <Border BackgroundColor="#1E293B" StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="25">
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" StrokeShape="RoundRectangle 18" Padding="24">
                 <VerticalStackLayout Spacing="20">
                     
                     <VerticalStackLayout HorizontalOptions="Center" Spacing="0">
-                        <Label Text="{Binding TotalCaloriesText}" TextColor="#10B981" FontSize="48" FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding GoalText}" FontSize="14" TextColor="#64748B" HorizontalOptions="Center">
+                        <Label Text="{Binding TotalCaloriesText}" TextColor="{StaticResource Primary}" FontSize="48" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding GoalText}" Style="{StaticResource Caption}" HorizontalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeGoalCommand}" />
                             </Label.GestureRecognizers>
                         </Label>                    
                     </VerticalStackLayout>
 
-                    <ProgressBar Progress="{Binding CaloriesProgress}" ProgressColor="#10B981" HeightRequest="10" />
+                    <ProgressBar Progress="{Binding CaloriesProgress}" HeightRequest="10" />
 
-                    <BoxView HeightRequest="1" Color="#334155" Margin="0,5" />
+                    <BoxView HeightRequest="1" Color="{StaticResource DividerSoft}" Margin="0,5" />
 
                     <Grid ColumnDefinitions="*, *, *">
                         <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
-                            <Label Text="Proteini" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                            <Label Text="{DynamicResource Protein}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                             <HorizontalStackLayout HorizontalOptions="Center">
-                                <Label Text="{Binding ProteinText}" TextColor="#3B82F6" FontSize="16" FontAttributes="Bold" />
-                                <Label Text="g" TextColor="#94A3B8" FontSize="16" />
+                                <Label Text="{Binding ProteinText}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                <Label Text="g" Style="{StaticResource Caption}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
-                            <Label Text="Ugljeni H." TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                            <Label Text="{DynamicResource Carbs}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                             <HorizontalStackLayout HorizontalOptions="Center">
-                                <Label Text="{Binding CarbsText}" TextColor="#F59E0B" FontSize="16" FontAttributes="Bold" />
-                                <Label Text="g" TextColor="#94A3B8" FontSize="16" />
+                                <Label Text="{Binding CarbsText}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                <Label Text="g" Style="{StaticResource Caption}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
-                            <Label Text="Masti" TextColor="#94A3B8" FontSize="12" HorizontalOptions="Center" />
+                            <Label Text="{DynamicResource Fats}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                             <HorizontalStackLayout HorizontalOptions="Center">
-                                <Label Text="{Binding FatsText}" TextColor="#EF4444" FontSize="16" FontAttributes="Bold" />
-                                <Label Text="g" TextColor="#94A3B8" FontSize="16" />
+                                <Label Text="{Binding FatsText}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                <Label Text="g" Style="{StaticResource Caption}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Grid>
 
                     <Grid ColumnDefinitions="*, Auto, Auto" RowDefinitions="Auto, Auto" Margin="0,10,0,0">
                         <Label Grid.Row="0" Grid.Column="0" 
-                               Text="💧 Unos vode" 
-                               TextColor="White" 
-                               FontSize="14" 
+                               Text="{DynamicResource WaterIntake}" 
                                FontAttributes="Bold" 
                                VerticalOptions="End" />
                         
                         <HorizontalStackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="End" Spacing="5" Margin="0,0,15,0">
-                            <Label Text="{Binding WaterText}" TextColor="White" FontSize="14" FontAttributes="Bold" />
-                            <Label Text="{Binding WaterGoalText}" TextColor="#94A3B8" FontSize="12" VerticalOptions="Center" />
+                            <Label Text="{Binding WaterText}" FontAttributes="Bold" />
+                            <Label Text="{Binding WaterGoalText}" Style="{StaticResource Caption}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
                         <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                                      Progress="{Binding WaterProgress}" 
-                                     ProgressColor="#3B82F6" 
                                      HeightRequest="8" 
                                      Margin="0,8,15,0" />
 
                         <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" 
                                 Text="+" 
-                                BackgroundColor="#3B82F6" 
-                                TextColor="White" 
-                                FontSize="24" 
-                                WidthRequest="42" 
-                                HeightRequest="42" 
-                                CornerRadius="21" 
+                                WidthRequest="44" 
+                                HeightRequest="44" 
                                 Padding="0" 
                                 VerticalOptions="Center"
                                 Command="{Binding AddWaterCommand}" />
@@ -108,7 +96,7 @@
             </Border>
             
             <VerticalStackLayout Spacing="15">
-                <Label Text="Uneti obroci" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                <Label Text="{DynamicResource EnteredMeals}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" />
                 
                 <CollectionView ItemsSource="{Binding Meals}">
                     <CollectionView.ItemsLayout>
@@ -117,20 +105,20 @@
 
                     <CollectionView.EmptyView>
                         <VerticalStackLayout HorizontalOptions="Center" Margin="0,20,0,0" Spacing="5">
-                            <Label Text="Još uvek nema obroka" TextColor="#64748B" FontSize="14" HorizontalOptions="Center" />
+                            <Label Text="{DynamicResource NoMealsToday}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </CollectionView.EmptyView>
                     
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Meal">
-                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" Padding="15" Margin="0,0,0,10">
+                        <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource Hairline}" StrokeThickness="1" Padding="24" Margin="0,0,0,10">
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding IsEaten}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#0B1121" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CanvasParchment}, Dark={StaticResource SurfaceTile3}}" />
                                     <Setter Property="Opacity" Value="0.6" />
                                 </DataTrigger>
                                 <DataTrigger TargetType="Border" Binding="{Binding IsEaten}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="#1E293B" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" />
                                     <Setter Property="Opacity" Value="1.0" />
                                 </DataTrigger>
                             </Border.Triggers>
@@ -148,17 +136,16 @@
                                         </Border.GestureRecognizers>
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsEaten}" Value="True">
-                                                <Setter Property="BackgroundColor" Value="#10B981" />
-                                                <Setter Property="Stroke" Value="#10B981" />
+                                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                                <Setter Property="Stroke" Value="{StaticResource Primary}" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsEaten}" Value="False">
                                                 <Setter Property="BackgroundColor" Value="Transparent" />
-                                                <Setter Property="Stroke" Value="#64748B" />
-                                                <Setter Property="StrokeThickness" Value="2" />
+                                                <Setter Property="Stroke" Value="{StaticResource Hairline}" />
                                             </DataTrigger>
                                         </Border.Triggers>
                                         
-                                        <Label Text="✓" TextColor="White" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Text="✓" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center">
                                             <Label.Triggers>
                                                 <DataTrigger TargetType="Label" Binding="{Binding IsEaten}" Value="False">
                                                     <Setter Property="IsVisible" Value="False" />
@@ -167,70 +154,65 @@
                                         </Label>
                                     </Border>
 
-                                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center">
+                                    <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsEaten}" Value="True">
-                                                <Setter Property="TextColor" Value="#64748B" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkMuted48}, Dark={StaticResource BodyMuted}}" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsEaten}" Value="False">
-                                                <Setter Property="TextColor" Value="White" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource OnDark}}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
                                     
                                     <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="2">
-                                        <Label Text="{Binding Calories}" FontSize="18" FontAttributes="Bold">
+                                        <Label Text="{Binding Calories}" FontAttributes="Bold">
                                             <Label.Triggers>
                                                 <DataTrigger TargetType="Label" Binding="{Binding IsEaten}" Value="True">
-                                                    <Setter Property="TextColor" Value="#64748B" />
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkMuted48}, Dark={StaticResource BodyMuted}}" />
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="Label" Binding="{Binding IsEaten}" Value="False">
-                                                    <Setter Property="TextColor" Value="#10B981" />
+                                                    <Setter Property="TextColor" Value="{StaticResource Primary}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
-                                        <Label Text=" kcal" FontSize="12" TextColor="#64748B" VerticalOptions="End" Margin="0,0,0,3" />
+                                        <Label Text=" kcal" Style="{StaticResource Caption}" VerticalOptions="End" Margin="0,0,0,3" />
                                     </HorizontalStackLayout>
                                 </Grid>
 
                                 <VerticalStackLayout IsVisible="{Binding IsExpanded}" Spacing="10" Margin="0,5,0,0">
-                                    <BoxView HeightRequest="1" Color="#334155" />
+                                    <BoxView HeightRequest="1" Color="{StaticResource DividerSoft}" />
                                     
                                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Ingredients}" Spacing="5">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate x:DataType="models:MealIngredient">
                                                 <Grid ColumnDefinitions="*, Auto" Margin="40,0,0,0">
-                                                    <Label Grid.Column="0" Text="{Binding Item.Name}" TextColor="#94A3B8" FontSize="14" />
-                                                    <Label Grid.Column="1" Text="{Binding Grams, StringFormat='{0}g'}" TextColor="#64748B" FontSize="14" />
+                                                    <Label Grid.Column="0" Text="{Binding Item.Name}" Style="{StaticResource Caption}" />
+                                                    <Label Grid.Column="1" Text="{Binding Grams, StringFormat='{0}g'}" Style="{StaticResource Caption}" />
                                                 </Grid>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </VerticalStackLayout>
                                     
-                                    <Border BackgroundColor="#0F172A" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10" Margin="40,5,0,0">
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource CanvasParchment}, Dark={StaticResource SurfaceTile3}}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10" Margin="40,5,0,0">
                                         <Grid ColumnDefinitions="*, *, *" HorizontalOptions="Fill">
                                             <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
-                                                <Label Text="Proteini" TextColor="#64748B" FontSize="12" />
-                                                <Label Text="{Binding MealProtein, StringFormat='{0:F1}g'}" TextColor="#3B82F6" FontSize="14" FontAttributes="Bold" />
+                                                <Label Text="{DynamicResource Protein}" Style="{StaticResource Caption}" />
+                                                <Label Text="{Binding MealProtein, StringFormat='{0:F1}g'}" FontAttributes="Bold" />
                                             </VerticalStackLayout>
                                             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
-                                                <Label Text="Uglj. hidrati" TextColor="#64748B" FontSize="12" />
-                                                <Label Text="{Binding MealCarbs, StringFormat='{0:F1}g'}" TextColor="#EAB308" FontSize="14" FontAttributes="Bold" />
+                                                <Label Text="{DynamicResource CarbsFull}" Style="{StaticResource Caption}" />
+                                                <Label Text="{Binding MealCarbs, StringFormat='{0:F1}g'}" FontAttributes="Bold" />
                                             </VerticalStackLayout>
                                             <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
-                                                <Label Text="Masti" TextColor="#64748B" FontSize="12" />
-                                                <Label Text="{Binding MealFats, StringFormat='{0:F1}g'}" TextColor="#F43F5E" FontSize="14" FontAttributes="Bold" />
+                                                <Label Text="{DynamicResource Fats}" Style="{StaticResource Caption}" />
+                                                <Label Text="{Binding MealFats, StringFormat='{0:F1}g'}" FontAttributes="Bold" />
                                             </VerticalStackLayout>
                                         </Grid>
                                     </Border>
                                     
                                     <Button x:DataType="{x:Null}" 
-                                            Text="Obriši obrok"
-                                            BackgroundColor="#EF4444"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            CornerRadius="8"
-                                            HeightRequest="40"
+                                            Text="{DynamicResource DeleteMeal}"
                                             Margin="40,10,0,0"
                                             Command="{Binding BindingContext.DeleteMealCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                             CommandParameter="{Binding .}" />

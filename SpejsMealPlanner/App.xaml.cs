@@ -5,6 +5,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        SpejsMealPlanner.Utilities.LocalizationManager.SetLanguage(Preferences.Default.Get("IsEnglish", false));
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

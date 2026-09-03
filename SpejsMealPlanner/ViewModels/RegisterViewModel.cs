@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpejsMealPlanner.Data;
 using SpejsMealPlanner.Models;
+using SpejsMealPlanner.Utilities;
 using System.Collections.ObjectModel;
 
 namespace SpejsMealPlanner.ViewModels;
@@ -26,10 +27,10 @@ public partial class RegisterViewModel : ObservableObject
     private bool isConsumer = true;
 
     [ObservableProperty]
-    private string consumerButtonColor = "#3B82F6";
+    private string consumerButtonColor = "#0066cc";
 
     [ObservableProperty]
-    private string chefButtonColor = "#1E293B";
+    private string chefButtonColor = "Transparent";
 
     public ObservableCollection<User> AvailableConsumers { get; set; } = new();
 
@@ -54,8 +55,8 @@ public partial class RegisterViewModel : ObservableObject
     {
         IsConsumer = true;
         IsChef = false;
-        ConsumerButtonColor = "#3B82F6";
-        ChefButtonColor = "#1E293B";
+        ConsumerButtonColor = "#0066cc";
+        ChefButtonColor = "Transparent";
     }
 
     [RelayCommand]
@@ -63,8 +64,8 @@ public partial class RegisterViewModel : ObservableObject
     {
         IsConsumer = false;
         IsChef = true;
-        ConsumerButtonColor = "#1E293B";
-        ChefButtonColor = "#3B82F6";
+        ConsumerButtonColor = "Transparent";
+        ChefButtonColor = "#0066cc";
         UcitajKonzumente();
     }
 
@@ -79,29 +80,32 @@ public partial class RegisterViewModel : ObservableObject
     private async Task RegisterAsync()
     {
         var page = Application.Current!.Windows[0].Page!;
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
+        string errorTitle = LocalizationManager.Translate("Error", isEnglish);
+        string okBtn = LocalizationManager.Translate("Ok", isEnglish);
 
         if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Pin))
         {
-            await page.DisplayAlert("Greška", "Ime i PIN su obavezna polja.", "OK");
+            await page.DisplayAlert(errorTitle, LocalizationManager.Translate("ErrorNamePinRequired", isEnglish), okBtn);
             return;
         }
 
         if (Pin.Length < 4)
         {
-            await page.DisplayAlert("Greška", "PIN mora imati barem 4 cifre.", "OK");
+            await page.DisplayAlert(errorTitle, LocalizationManager.Translate("ErrorPinLength", isEnglish), okBtn);
             return;
         }
 
         if (IsChef && SelectedConsumer == null)
         {
-            await page.DisplayAlert("Greška", "Moraš izabrati konzumenta za koga kuvaš.", "OK");
+            await page.DisplayAlert(errorTitle, LocalizationManager.Translate("ErrorChefConsumerRequired", isEnglish), okBtn);
             return;
         }
 
         var postojeci = _db.GetUserByPin(Pin);
         if (postojeci != null)
         {
-            await page.DisplayAlert("Greška", "Ovaj PIN je već u upotrebi. Izaberi drugi.", "OK");
+            await page.DisplayAlert(errorTitle, LocalizationManager.Translate("ErrorPinInUse", isEnglish), okBtn);
             return;
         }
 
@@ -118,7 +122,8 @@ public partial class RegisterViewModel : ObservableObject
 
         _db.SaveUser(noviKorisnik);
 
-        await page.DisplayAlert("Uspeh", "Korisnik je uspešno registrovan!", "OK");
+        string successTitle = LocalizationManager.Translate("Success", isEnglish);
+        await page.DisplayAlert(successTitle, LocalizationManager.Translate("SuccessRegistered", isEnglish), okBtn);
         await page.Navigation.PopAsync();
     }
 }
