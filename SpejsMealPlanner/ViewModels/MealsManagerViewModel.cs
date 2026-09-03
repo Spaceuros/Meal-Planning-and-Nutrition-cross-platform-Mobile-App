@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpejsMealPlanner.Models;
 using SpejsMealPlanner.Data; 
+using SpejsMealPlanner.Utilities;
 using System.Collections.ObjectModel;
 
 namespace SpejsMealPlanner.ViewModels;
@@ -54,8 +55,14 @@ public partial class MealsManagerViewModel : ObservableObject
     private async Task DeleteMealAsync(Meal obrokZaBrisanje)
     {
         if (obrokZaBrisanje == null) return;
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
+        
+        string title = isEnglish ? "Confirm" : "Potvrda";
+        string message = isEnglish ? $"Do you want to delete '{obrokZaBrisanje.Name}'?" : $"Da li želiš da obrišeš '{obrokZaBrisanje.Name}'?";
+        string yesBtn = isEnglish ? "Yes" : "Da";
+        string noBtn = isEnglish ? "Cancel" : "Odustani";
 
-        bool potvrda = await Shell.Current.DisplayAlert("Potvrda", $"Da li želiš da obrišeš '{obrokZaBrisanje.Name}'?", "Da", "Odustani");
+        bool potvrda = await Shell.Current.DisplayAlert(title, message, yesBtn, noBtn);
         if (potvrda)
         {
             _db.SoftDeleteMeal(obrokZaBrisanje.Id); 

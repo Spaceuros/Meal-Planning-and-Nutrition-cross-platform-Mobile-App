@@ -4,26 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SpejsMealPlanner"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="#0F172A"
-    Shell.TabBarForegroundColor="White"
-    Shell.TabBarTitleColor="White"
-    Shell.TabBarUnselectedColor="#94A3B8">
+    Shell.FlyoutBehavior="Disabled">
 
-    <!-- Tab Bar -->
     <TabBar>
-        <!-- 1. TAB: Početna (Dashboard) -->
-        <Tab x:Name="TabHome" Title="Home" Icon="home.png">
+        <Tab x:Name="TabHome" Title="{DynamicResource TabHome}" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
 
-        <!-- 2. TAB: Upravljanje Obrocima -->
-        <Tab x:Name="TabObroci" Title="Obroci" Icon="meals.png">
+        <Tab x:Name="TabObroci" Title="{DynamicResource TabMeals}" Icon="meals.png">
             <ShellContent ContentTemplate="{DataTemplate local:MealsManagerPage}" />
         </Tab>
 
-        <!-- 3. TAB: Sastojci -->
-        <Tab x:Name="TabSastojci" Title="Sastojci" Icon="ingredients.png">
+        <Tab x:Name="TabSastojci" Title="{DynamicResource TabIngredients}" Icon="ingredients.png">
             <ShellContent ContentTemplate="{DataTemplate local:SastojciPage}" />
         </Tab>
     </TabBar>

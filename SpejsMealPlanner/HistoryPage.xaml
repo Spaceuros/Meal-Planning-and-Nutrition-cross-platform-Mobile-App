@@ -5,12 +5,11 @@
              xmlns:viewmodels="clr-namespace:SpejsMealPlanner.ViewModels"
              x:DataType="viewmodels:HistoryPageViewModel"
              x:Class="SpejsMealPlanner.HistoryPage"
-             Title="Istorija obroka"
-             BackgroundColor="#0F172A">
+             Title="{DynamicResource HistoryTitle}">
 
     <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Obrisani obroci" TextColor="White" FontSize="22" FontAttributes="Bold" />
-        <Label Text="Zadržavamo poslednjih 5. Prevuci ulevo da vratiš obrok u dnevni plan." TextColor="#94A3B8" FontSize="14" />
+        <Label Text="{DynamicResource DeletedMeals}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" FontAttributes="Bold" />
+        <Label Text="{DynamicResource HistorySubtitle}" Style="{StaticResource Caption}" />
 
         <CollectionView ItemsSource="{Binding DeletedMeals}" Margin="0,15,0,0">
             <CollectionView.ItemsLayout>
@@ -19,7 +18,7 @@
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" Margin="0,40,0,0" Spacing="10">
-                    <Label Text="Istorija je prazna" TextColor="#64748B" FontSize="16" HorizontalOptions="Center" />
+                    <Label Text="{DynamicResource HistoryEmpty}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
@@ -31,23 +30,23 @@
                             <SwipeItems x:DataType="{x:Null}">
                                 <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HistoryPageViewModel}}, Path=RestoreMealCommand}" 
                                                CommandParameter="{Binding .}">
-                                    <Border BackgroundColor="#10B981" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
-                                        <Label Text="Vrati" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" />
+                                    <Border BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 18" StrokeThickness="0" Margin="10,0,0,0" WidthRequest="80">
+                                        <Label Text="{DynamicResource Restore}" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
                                     </Border>
                                 </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border StrokeShape="RoundRectangle 16" BackgroundColor="#1E293B" StrokeThickness="0" Padding="15, 20">
+                        <Border StrokeShape="RoundRectangle 18" BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" StrokeThickness="1" Stroke="{StaticResource Hairline}" Padding="24">
                             <Grid ColumnDefinitions="*, Auto">
                                 <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" />
-                                    <Label Text="Prevuci ulevo da vratiš" FontSize="12" TextColor="#64748B" />
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                    <Label Text="{DynamicResource SwipeLeftToRestore}" Style="{StaticResource Caption}" />
                                 </VerticalStackLayout>
                                 
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                    <Label Text="{Binding Calories}" FontSize="20" TextColor="#94A3B8" FontAttributes="Bold" />
-                                    <Label Text=" kcal" FontSize="14" TextColor="#64748B" VerticalOptions="End" Margin="0,0,0,3" />
+                                    <Label Text="{Binding Calories}" TextColor="{StaticResource Primary}" FontAttributes="Bold" />
+                                    <Label Text=" kcal" Style="{StaticResource Caption}" VerticalOptions="End" Margin="0,0,0,3" />
                                 </HorizontalStackLayout>
                             </Grid>
                         </Border>

@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpejsMealPlanner.Models;
 using SpejsMealPlanner.Data; 
+using SpejsMealPlanner.Utilities;
 using System.Collections.ObjectModel;
 
 namespace SpejsMealPlanner.ViewModels;
@@ -55,24 +56,44 @@ public partial class MainPageViewModel : ObservableObject
         string userName = Preferences.Default.Get("UserName", "Solo");
         int ciljVodeMl = Preferences.Default.Get($"DailyWaterGoal_{userName}", 2000); 
         int trenutnoMl = WaterGlasses * 250;
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
         
         WaterText = $"{trenutnoMl} ml";
-        WaterGoalText = $"od {ciljVodeMl} ml";
+        string fromText = isEnglish ? "of" : "od";
+        WaterGoalText = $"{fromText} {ciljVodeMl} ml";
         WaterProgress = Math.Min((double)trenutnoMl / ciljVodeMl, 1.0);
     }
 
     public void UcitajPodatke()
     {
         string userName = Preferences.Default.Get("UserName", "Solo");
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
 
-        string danNaSrpskom = DateTime.Now.DayOfWeek switch
+        string danText = string.Empty;
+        
+        if (isEnglish)
         {
-            DayOfWeek.Monday => "Ponedeljak", DayOfWeek.Tuesday => "Utorak",
-            DayOfWeek.Wednesday => "Sreda", DayOfWeek.Thursday => "Četvrtak",
-            DayOfWeek.Friday => "Petak", DayOfWeek.Saturday => "Subota",
-            DayOfWeek.Sunday => "Nedelja", _ => ""
-        };
-        DateText = $"{danNaSrpskom}, {DateTime.Now:dd. MMM}";
+             danText = DateTime.Now.DayOfWeek switch
+             {
+                 DayOfWeek.Monday => "Monday", DayOfWeek.Tuesday => "Tuesday",
+                 DayOfWeek.Wednesday => "Wednesday", DayOfWeek.Thursday => "Thursday",
+                 DayOfWeek.Friday => "Friday", DayOfWeek.Saturday => "Saturday",
+                 DayOfWeek.Sunday => "Sunday", _ => ""
+             };
+        }
+        else
+        {
+             danText = DateTime.Now.DayOfWeek switch
+             {
+                 DayOfWeek.Monday => "Ponedeljak", DayOfWeek.Tuesday => "Utorak",
+                 DayOfWeek.Wednesday => "Sreda", DayOfWeek.Thursday => "Četvrtak",
+                 DayOfWeek.Friday => "Petak", DayOfWeek.Saturday => "Subota",
+                 DayOfWeek.Sunday => "Nedelja", _ => ""
+             };
+        }
+        
+        string dateFormat = isEnglish ? "MMM dd" : "dd. MMM";
+        DateText = $"{danText}, {DateTime.Now.ToString(dateFormat)}";
 
         string danasnjiDatum = DateTime.Today.ToString("yyyy-MM-dd");
         string sacuvaniDatum = Preferences.Default.Get($"LastWaterDate_{userName}", string.Empty);
@@ -154,7 +175,9 @@ public partial class MainPageViewModel : ObservableObject
         int dnevniCilj = Preferences.Default.Get($"DailyCalorieGoal_{userName}", 2000);
 
         TotalCaloriesText = totalCalories.ToString();
-        GoalText = $"od {dnevniCilj} kcal uneto";
+        string fromText = isEnglish ? "of" : "od";
+        string eatenText = isEnglish ? "kcal entered" : "kcal uneto";
+        GoalText = $"{fromText} {dnevniCilj} {eatenText}";
         CaloriesProgress = Math.Min((double)totalCalories / dnevniCilj, 1.0);
         
         ProteinText = totalProteins.ToString("F1");
@@ -186,9 +209,13 @@ public partial class MainPageViewModel : ObservableObject
     {
         string userName = Preferences.Default.Get("UserName", "Solo");
         int trenutniCilj = Preferences.Default.Get($"DailyCalorieGoal_{userName}", 2000);
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
+        
+        string title = isEnglish ? "Daily goal" : "Dnevni cilj";
+        string message = isEnglish ? "Enter your new daily calorie goal:" : "Unesi svoj novi dnevni cilj kalorija:";
         
         string? rezultat = await Shell.Current.DisplayPromptAsync(
-            "Dnevni cilj", "Unesi svoj novi dnevni cilj kalorija:", 
+            title, message, 
             initialValue: trenutniCilj.ToString(), keyboard: Keyboard.Numeric);
 
         if (int.TryParse(rezultat, out int noviCilj) && noviCilj > 0)
@@ -202,9 +229,14 @@ public partial class MainPageViewModel : ObservableObject
     private async Task DeleteMealAsync(Meal obrokZaBrisanje)
     {
         if (obrokZaBrisanje == null) return;
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
 
-        bool potvrda = await Shell.Current.DisplayAlert(
-            "Brisanje", $"Da li želiš da obrišeš '{obrokZaBrisanje.Name}'?", "Da", "Odustani");
+        string title = isEnglish ? "Delete" : "Brisanje";
+        string message = isEnglish ? $"Do you want to delete '{obrokZaBrisanje.Name}'?" : $"Da li želiš da obrišeš '{obrokZaBrisanje.Name}'?";
+        string yesBtn = isEnglish ? "Yes" : "Da";
+        string noBtn = isEnglish ? "Cancel" : "Odustani";
+
+        bool potvrda = await Shell.Current.DisplayAlert(title, message, yesBtn, noBtn);
         
         if (potvrda)
         {

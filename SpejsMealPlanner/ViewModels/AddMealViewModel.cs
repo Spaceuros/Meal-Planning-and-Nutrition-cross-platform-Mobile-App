@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpejsMealPlanner.Models;
 using SpejsMealPlanner.Data; 
+using SpejsMealPlanner.Utilities;
 using System.Collections.ObjectModel;
 
 namespace SpejsMealPlanner.ViewModels;
@@ -24,7 +25,7 @@ public partial class AddMealViewModel : ObservableObject
     private Ingredient? selectedIngredient;
 
     [ObservableProperty]
-    private string saveButtonText = "Sačuvaj";
+    private string saveButtonText = string.Empty;
 
     public ObservableCollection<MealIngredient> CurrentIngredients { get; set; } = new();
     public List<Ingredient> AvailableIngredients { get; set; } = new();
@@ -37,18 +38,19 @@ public partial class AddMealViewModel : ObservableObject
     public void PripremiObrok(Meal? obrokZaIzmenu = null)
     {
         AvailableIngredients = _db.GetIngredients();
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
 
         if (obrokZaIzmenu == null)
         {
             _currentMeal = new Meal { Date = DateTime.Today };
-            SaveButtonText = "Sačuvaj";
+            SaveButtonText = LocalizationManager.Translate("Save", isEnglish);
         }
         else
         {
             _currentMeal = obrokZaIzmenu;
             MealName = _currentMeal.Name;
             MealCategory = _currentMeal.Category;
-            SaveButtonText = "Ažuriraj Obrok";
+            SaveButtonText = LocalizationManager.Translate("Update", isEnglish);
 
             UcitajPostojeceSastojke();
         }
@@ -100,9 +102,13 @@ public partial class AddMealViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveMealAsync()
     {
+        bool isEnglish = Preferences.Default.Get("IsEnglish", false);
+
         if (string.IsNullOrWhiteSpace(MealName) || CurrentIngredients.Count == 0)
         {
-            await Shell.Current.DisplayAlert("Greška", "Unesi naziv obroka i dodaj barem jedan sastojak.", "OK");
+            string errorTitle = LocalizationManager.Translate("Error", isEnglish);
+            string errorMessage = isEnglish ? "Enter meal name and add at least one ingredient." : "Unesi naziv obroka i dodaj barem jedan sastojak.";
+            await Shell.Current.DisplayAlert(errorTitle, errorMessage, LocalizationManager.Translate("Ok", isEnglish));
             return;
         }
 
@@ -116,7 +122,9 @@ public partial class AddMealViewModel : ObservableObject
 
         _db.SaveMeal(_currentMeal, CurrentIngredients.ToList());
 
-        await Shell.Current.DisplayAlert("Uspeh", "Obrok je uspešno sačuvan!", "OK");
+        string successTitle = LocalizationManager.Translate("Success", isEnglish);
+        string successMessage = isEnglish ? "Meal successfully saved!" : "Obrok je uspešno sačuvan!";
+        await Shell.Current.DisplayAlert(successTitle, successMessage, LocalizationManager.Translate("Ok", isEnglish));
         await Shell.Current.Navigation.PopAsync();
     }
 }
