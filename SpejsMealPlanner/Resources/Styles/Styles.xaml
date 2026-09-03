@@ -106,13 +106,6 @@
         <Setter Property="MinimumWidthRequest" Value="44"/>
     </Style>
 
-    <Style TargetType="Frame">
-        <Setter Property="HasShadow" Value="False" />
-        <Setter Property="BorderColor" Value="{StaticResource Hairline}" />
-        <Setter Property="CornerRadius" Value="18" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource SurfaceTile1}}" />
-    </Style>
-
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>
